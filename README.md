@@ -1,5 +1,7 @@
-Puppet Reviewboard Installation
-===============================
+Puppet Reviewboard
+==================
+
+Manage an install of (Reviewboard)[http://www.reviewboard.org]
 
 To install include the package 'reviewboard' in your manifest
 
@@ -8,7 +10,10 @@ Usage
 
 Create a reviewboard site based at '/var/www/reviewboard':
 
-    reviewboard::site {'/var/www/reviewboard':}
+    reviewboard::site {'/var/www/reviewboard':
+        vhost    => "${::fqdn}",
+        location => "/reviewboard/"
+    }
 
 Enable LDAP authentication for the site
 
