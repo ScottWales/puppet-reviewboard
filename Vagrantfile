@@ -46,7 +46,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision :puppet do |puppet|
     puppet.manifests_path = ["vm", "/vagrant/testing"]
     puppet.manifest_file  = "vagrant.pp"
-    puppet.options = "--modulepath '/tmp/vagrant-puppet/modules:/vagrant/modules:/etc/puppet/modules'"
+    puppet.options = "--modulepath '/tmp/vagrant-puppet/modules:/etc/puppet/modules'"
   end
 
 end

@@ -23,6 +23,7 @@ class reviewboard::provider::web::simplepackage (
 
   service {'httpd':
     ensure => running,
+    enable => true,
   }
 
   file {'/etc/httpd/conf.d':
@@ -36,4 +37,5 @@ class reviewboard::provider::web::simplepackage (
     content => 'LoadModule wsgi_module modules/mod_wsgi.so',
     notify  => Service['httpd'],
   }
+
 }

@@ -1,4 +1,4 @@
-## \file    testing/vagrant.pp
+## \file    manifests/siteconfig.pp
 #  \author  Scott Wales <scott.wales@unimelb.edu.au>
 #  \brief
 #
@@ -16,27 +16,19 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-node default {
-  include postgresql::server
-  include postgresql::lib::python
+# Set a configuration setting then reload the web server
+define reviewboard::site::config (
+  $site,
+  $key,
+  $value,
+) {
 
-  package {['memcached','python-memcached','python-ldap']:}
-
-  reviewboard::site {'/var/www/reviewboard':
-    require   => [
-      Class['postgresql::server','postgresql::lib::python'],
-      Package['memcached','python-memcached','python-ldap']
-    ],
-    dbpass    => 'testing',
-    adminpass => 'testing',
-  }
-  reviewboard::site::ldap {'/var/www/reviewboard':
-    uri    => 'test.example.com',
-    basedn => 'dn=test,dn=example,dn=com',
+  exec {"rb-site ${site} set ${key}=${value}":
+    command => "rb-site manage ${site} set-siteconfig -- --key '${key}' --value '${value}'",
+    unless  => "rb-site manage ${site} get-siteconfig -- --key '${key}' | grep '^${value}$'",
+    path    => ['/bin','/usr/bin'],
+    require => Class['reviewboard::package'],
+    notify  => Reviewboard::Provider::Web[$site],
   }
 
-  # Disable the firewall
-  service {'iptables':
-    ensure => stopped,
-  }
 }

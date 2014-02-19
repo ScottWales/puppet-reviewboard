@@ -24,14 +24,32 @@
 define reviewboard::provider::web::simple (
   $vhost,
   $location,
-  $reviewboard,
 ) {
+
+  $site = $name
+
   include reviewboard::provider::web::simplepackage
 
+  # Install apache config file
   file {"/etc/httpd/conf.d/${vhost}.conf":
     ensure => link,
-    source => "${reviewboard}/conf/apache-wsgi.conf",
+    source => "${site}/conf/apache-wsgi.conf",
     notify => Service['httpd'],
+  }
+
+  # Directories written by the web server
+  file {["${site}/data","${site}/htdocs/media/ext"]:
+    ensure  => directory,
+    owner   => 'apache',
+    recurse => true,
+    notify  => Service['httpd'],
+  }
+
+  # Propogate update events to the service
+  exec {"Update ${name}":
+    command     => '/bin/true',
+    refreshonly => true,
+    notify      => Service['httpd'],
   }
 
 }

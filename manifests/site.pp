@@ -19,7 +19,7 @@
 # Set up a reviewboard site
 
 define reviewboard::site (
-  $path       = '/var/www/reviewboard',
+  $site       = '/var/www/reviewboard',
   $vhost      = $::fqdn,
   $location   = '/reviewboard/',
   $dbtype     = 'postgresql',
@@ -55,48 +55,27 @@ define reviewboard::site (
     err("dbtype ${dbtype} not implemented")
   }
 
-  $args = [
-    '--noinput',
-    "--domain-name ${vhost}",
-    "--site-root ${location}",
-    "--db-type ${dbtype}",
-    "--db-name ${dbname}",
-    "--db-user ${dbuser}",
-    "--db-pass ${dbpass}",
-    "--cache-type ${cache}",
-    "--cache-info ${cacheinfo}",
-    '--web-server-type apache',
-    '--python-loader wsgi',
-    "--admin-user ${admin}",
-    "--admin-pass ${adminpass}",
-    "--admin-email ${adminemail}",
-  ]
-
-  $argstr = join($args, ' ')
-
-  exec {"rb-site install ${name}":
-    require => Class[reviewboard::package],
-    command => "rb-site install ${path} ${argstr}",
-    path    => '/usr/bin',
-    creates => $path,
-  }
-
-  # Directories written by the web server
-  file {["${path}/data","${path}/htdocs/media/ext"]:
-    ensure  => directory,
-    owner   => $wwwuser,
-    recurse => true,
+  # Run site-install
+  reviewboard::site::install {$site:
+    vhost      => $vhost,
+    location   => $location,
+    dbtype     => $dbtype,
+    dbname     => $dbname,
+    dbhost     => $dbhost,
+    dbuser     => $dbuser,
+    dbpass     => $dbpass,
+    admin      => $admin,
+    adminpass  => $adminpass,
+    adminemail => $adminemail,
+    cache      => $cache,
+    cacheinfo  => $cacheinfo,
   }
 
   # Set up the web server
-  reviewboard::provider::web::simple {$name:
-    vhost       => $vhost,
-    location    => $location,
-    reviewboard => $path,
-    require     => [
-      Exec["rb-site install ${name}"],
-      File["${path}/data","${path}/htdocs/media/ext"],
-    ],
+  reviewboard::provider::web {$site:
+    vhost    => $vhost,
+    location => $location,
+    require  => Reviewboard::Site::Install[$site],
   }
 
 }

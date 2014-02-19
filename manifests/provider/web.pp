@@ -1,4 +1,4 @@
-## \file    testing/vagrant.pp
+## \file    manifests/provider/web.pp
 #  \author  Scott Wales <scott.wales@unimelb.edu.au>
 #  \brief
 #
@@ -16,27 +16,22 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-node default {
-  include postgresql::server
-  include postgresql::lib::python
+# Delegate to custom web provider (e.g. puppetlabs/apache, custom, etc)
+define reviewboard::provider::web (
+  $vhost,
+  $location,
+) {
 
-  package {['memcached','python-memcached','python-ldap']:}
+  $site = $name
 
-  reviewboard::site {'/var/www/reviewboard':
-    require   => [
-      Class['postgresql::server','postgresql::lib::python'],
-      Package['memcached','python-memcached','python-ldap']
-    ],
-    dbpass    => 'testing',
-    adminpass => 'testing',
-  }
-  reviewboard::site::ldap {'/var/www/reviewboard':
-    uri    => 'test.example.com',
-    basedn => 'dn=test,dn=example,dn=com',
-  }
-
-  # Disable the firewall
-  service {'iptables':
-    ensure => stopped,
+  if $reviewboard::webprovider == 'simple' {
+    reviewboard::provider::web::simple {$site:
+      vhost       => $vhost,
+      location    => $location,
+    }
+  } elsif $reviewboard::webprovider == 'none '{
+    # No-op
+  } else {
+    err("Web provider '${reviewboard::webprovider}' not defined")
   }
 }
