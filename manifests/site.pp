@@ -24,10 +24,11 @@ define reviewboard::site (
   $location   = '/reviewboard/',
   $dbtype     = 'postgresql',
   $dbname     = 'reviewboard',
+  $dbhost     = 'localhost',
   $dbuser     = 'reviewboard',
-  $dbpass     = 'UNSAFE',
+  $dbpass     = undef,
   $admin      = 'admin',
-  $adminpass  = 'UNSAFE',
+  $adminpass  = undef,
   $adminemail = 'apache',
   $cache      = 'memcached',
   $cacheinfo  = 'localhost:11211',
@@ -35,19 +36,20 @@ define reviewboard::site (
 ) {
   include reviewboard
 
-  if $dbpass == 'UNSAFE' {
+  if $dbpass == undef {
     err('Postges DB password not set')
   }
-  if $adminpass == 'UNSAFE' {
+  if $adminpass == undef {
     err('Admin password not set')
   }
 
   # Create the database
   if $dbtype == 'postgresql' {
-    postgresql::server::db {$dbname:
-      user     => $dbuser,
-      password => postgresql_password($dbuser,$dbpass),
-      before   => Exec["rb-site install ${name}"],
+    reviewboard::provider::db::puppetlabspostgresql {$name:
+      dbuser => $dbuser,
+      dbpass => $dbpass,
+      dbname => $dbname,
+      dbhost => $dbhost,
     }
   } else {
     err("dbtype ${dbtype} not implemented")
