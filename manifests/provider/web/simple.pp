@@ -1,4 +1,4 @@
-## \file    manifests/package.pp
+## \file    simple.pp
 #  \author  Scott Wales <scott.wales@unimelb.edu.au>
 #  \brief
 #
@@ -16,11 +16,22 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-class reviewboard::package {
-  include epel
+# Simple web config
+#
+# Reviewboard creates a default apache config, just install it and restart
+# the daemon
 
-  package {'ReviewBoard':
-    require => Class['epel'],
+define reviewboard::provider::web::simple (
+  $vhost,
+  $location,
+  $reviewboard,
+) {
+  include reviewboard::provider::web::simplepackage
+
+  file {"/etc/httpd/conf.d/${vhost}.conf":
+    ensure => link,
+    source => "${reviewboard}/conf/apache-wsgi.conf",
+    notify => Service['httpd'],
   }
 
 }

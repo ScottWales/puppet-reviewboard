@@ -19,7 +19,14 @@
 #  
 
 rpm -ivh https://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-7.noarch.rpm
-yum install --assumeyes puppet
+yum install --assumeyes puppet git
 
 gem install librarian-puppet
-cd /vagrant && librarian-puppet install
+
+# We run librarian-puppet in the /etc/puppet directory as you can get errors
+# running in a directory shared by vagrant 
+# See https://github.com/rodjek/librarian-puppet/issues/57
+
+ln -sf /vagrant/Modulefile /etc/puppet
+ln -sf /vagrant/Puppetfile /etc/puppet
+cd /etc/puppet && librarian-puppet install --verbose

@@ -1,4 +1,4 @@
-## \file    manifests/site.pp
+#  \file    manifests/site.pp
 #  \author  Scott Wales <scott.wales@unimelb.edu.au>
 #  \brief
 #
@@ -20,7 +20,8 @@
 
 define reviewboard::site (
   $path       = '/var/www/reviewboard',
-  $url        = '/reviewboard/',
+  $vhost      = $::fqdn,
+  $location   = '/reviewboard/',
   $dbtype     = 'postgresql',
   $dbname     = 'reviewboard',
   $dbuser     = 'reviewboard',
@@ -32,6 +33,7 @@ define reviewboard::site (
   $cacheinfo  = 'localhost:11211',
   $wwwuser    = 'apache',
 ) {
+  include reviewboard
 
   if $dbpass == 'UNSAFE' {
     err('Postges DB password not set')
@@ -53,8 +55,8 @@ define reviewboard::site (
 
   $args = [
     '--noinput',
-    "--domain-name ${::fqdn}",
-    "--site-root ${url}",
+    "--domain-name ${vhost}",
+    "--site-root ${location}",
     "--db-type ${dbtype}",
     "--db-name ${dbname}",
     "--db-user ${dbuser}",
@@ -77,14 +79,22 @@ define reviewboard::site (
     creates => $path,
   }
 
-  file {'/etc/httpd/conf.d/reviewboard.conf':
-    ensure  => link,
-    require => Exec["rb-site install ${name}"],
-    target  => "${path}/conf/apache-wsgi.conf",
-    notify  => Service[httpd]
+  # Directories written by the web server
+  file {["${path}/data","${path}/htdocs/media/ext"]:
+    ensure  => directory,
+    owner   => $wwwuser,
+    recurse => true,
   }
 
-  service {'httpd':
-    ensure => running,
+  # Set up the web server
+  reviewboard::provider::web::simple {$name:
+    vhost       => $vhost,
+    location    => $location,
+    reviewboard => $path,
+    require     => [
+      Exec["rb-site install ${name}"],
+      File["${path}/data","${path}/htdocs/media/ext"],
+    ],
   }
+
 }

@@ -17,5 +17,22 @@
 #  limitations under the License.
 
 node default {
-  include reviewboard
+  include postgresql::server
+  include postgresql::lib::python
+
+  package {['memcached','python-memcached']:}
+
+  reviewboard::site {'test':
+    require   => [
+      Class['postgresql::server','postgresql::lib::python'],
+      Package['memcached','python-memcached']
+    ],
+    dbpass    => 'testing',
+    adminpass => 'testing',
+  }
+
+  # Disable the firewall
+  service {'iptables':
+    ensure => stopped,
+  }
 }
