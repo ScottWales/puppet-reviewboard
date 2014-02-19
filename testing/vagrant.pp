@@ -30,10 +30,10 @@ node default {
     dbpass    => 'testing',
     adminpass => 'testing',
   }
-  reviewboard::site::ldap {'/var/www/reviewboard':
-    uri    => 'test.example.com',
-    basedn => 'dn=test,dn=example,dn=com',
-  }
+  #  reviewboard::site::ldap {'/var/www/reviewboard':
+  #    uri    => 'test.example.com',
+  #    basedn => 'dn=test,dn=example,dn=com',
+  #  }
 
   # Disable the firewall
   service {'iptables':

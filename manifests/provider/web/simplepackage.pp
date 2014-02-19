@@ -21,15 +21,21 @@ class reviewboard::provider::web::simplepackage (
 
 ) {
 
+  package {'httpd':
+    ensure => present,
+  }
+
   service {'httpd':
-    ensure => running,
-    enable => true,
+    ensure  => running,
+    enable  => true,
+    require => Package['httpd'],
   }
 
   file {'/etc/httpd/conf.d':
     ensure  => directory,
     recurse => true,
     purge   => true,
+    require => Package['httpd'],
   }
 
   file {'/etc/httpd/conf.d/mod_wsgi.conf':

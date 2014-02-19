@@ -44,15 +44,11 @@ define reviewboard::site (
   }
 
   # Create the database
-  if $dbtype == 'postgresql' {
-    reviewboard::provider::db::puppetlabspostgresql {$name:
-      dbuser => $dbuser,
-      dbpass => $dbpass,
-      dbname => $dbname,
-      dbhost => $dbhost,
-    }
-  } else {
-    err("dbtype ${dbtype} not implemented")
+  reviewboard::provider::db {$site:
+    dbuser => $dbuser,
+    dbpass => $dbpass,
+    dbname => $dbname,
+    dbhost => $dbhost,
   }
 
   # Run site-install
