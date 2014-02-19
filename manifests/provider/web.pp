@@ -29,7 +29,12 @@ define reviewboard::provider::web (
       vhost       => $vhost,
       location    => $location,
     }
-  } elsif $reviewboard::webprovider == 'none '{
+  } elsif $reviewboard::webprovider == 'puppetlabs/apache' {
+    reviewboard::provider::web::puppetlabsapache {$site:
+      vhost       => $vhost,
+      location    => $location,
+    }
+  } elsif $reviewboard::webprovider == 'none' {
     # No-op
   } else {
     err("Web provider '${reviewboard::webprovider}' not defined")

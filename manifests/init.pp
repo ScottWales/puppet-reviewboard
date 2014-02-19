@@ -17,7 +17,7 @@
 #  limitations under the License.
 
 class reviewboard (
-  $webprovider = 'simple',
+  $webprovider = 'puppetlabs/apache',
   $dbprovider  = 'puppetlabs/postgresql',
 ) {
 

@@ -20,15 +20,23 @@ node default {
   include postgresql::server
   include postgresql::lib::python
 
+  class {'apache':
+    default_vhost => false,
+  }
+
   package {['memcached','python-memcached','python-ldap']:}
+
+  class {'reviewboard':
+    webprovider => 'puppetlabs/apache',
+  }
 
   reviewboard::site {'/var/www/reviewboard':
     require   => [
       Class['postgresql::server','postgresql::lib::python'],
       Package['memcached','python-memcached','python-ldap']
     ],
-    dbpass    => 'testing',
-    adminpass => 'testing',
+    dbpass      => 'testing',
+    adminpass   => 'testing',
   }
   #  reviewboard::site::ldap {'/var/www/reviewboard':
   #    uri    => 'test.example.com',

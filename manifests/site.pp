@@ -21,7 +21,7 @@
 define reviewboard::site (
   $site       = '/var/www/reviewboard',
   $vhost      = $::fqdn,
-  $location   = '/reviewboard/',
+  $location   = '/reviewboard',
   $dbtype     = 'postgresql',
   $dbname     = 'reviewboard',
   $dbhost     = 'localhost',
@@ -54,7 +54,7 @@ define reviewboard::site (
   # Run site-install
   reviewboard::site::install {$site:
     vhost      => $vhost,
-    location   => $location,
+    location   => "${location}/", # Trailing slash required
     dbtype     => $dbtype,
     dbname     => $dbname,
     dbhost     => $dbhost,
