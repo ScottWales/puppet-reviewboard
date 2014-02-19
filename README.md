@@ -1,9 +1,21 @@
 Puppet Reviewboard
 ==================
 
-Manage an install of (Reviewboard)[http://www.reviewboard.org]
+Manage an install of [Reviewboard](http://www.reviewboard.org)
 
 To install include the package 'reviewboard' in your manifest
+
+Pre-Requisites
+--------------
+
+Puppet module pre-requisites are managed using
+[librarian-puppet](https://github.com/rodjek/librarian-puppet)
+
+Additionally the following optional prerequisites may be installed:
+
+ * memcached & python-memcached for website caching
+ * python-ldap for ldap authentication
+ * python bindings for your database
 
 Usage
 -----
@@ -45,3 +57,5 @@ Testing
 A Vagrantfile is provided to test the module, to test provisioning run
 
     $ vagrant up
+
+The Reviewboard site will then be available at http://localhost:8090/reviewboard

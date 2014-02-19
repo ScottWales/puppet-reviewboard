@@ -1,9 +1,8 @@
 #!/bin/bash
 ## \file    testing/init.sh
 #  \author  Scott Wales <scott.wales@unimelb.edu.au>
-#  \brief   
 #  
-#  Copyright 2014 Scott Wales
+#  Copyright 2014 ARC Centre of Excellence for Climate Systems Science
 #  
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -17,6 +16,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #  
+
+# Bootstrap puppet & install module pre-requisites
 
 rpm -ivh https://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-7.noarch.rpm
 yum install --assumeyes puppet git
