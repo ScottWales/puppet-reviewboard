@@ -19,7 +19,7 @@
 # Set up a reviewboard site
 
 define reviewboard::site (
-  $site       = '/var/www/reviewboard',
+  $site       = $name,
   $vhost      = $::fqdn,
   $location   = '/reviewboard',
   $dbtype     = 'postgresql',
