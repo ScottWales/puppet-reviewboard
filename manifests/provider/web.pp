@@ -64,5 +64,11 @@ define reviewboard::provider::web (
     notify  => $webservice,
     recurse => true,
   }
+  file {"${site}/conf":
+    ensure  => directory,
+    owner   => $realwebuser,
+    recurse => true,
+    mode    => 'go-rwx',
+  }
 
 }
