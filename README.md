@@ -24,7 +24,7 @@ Create a reviewboard site based at '/var/www/reviewboard':
 
     reviewboard::site {'/var/www/reviewboard':
         vhost    => "${::fqdn}",
-        location => "/reviewboard/"
+        location => '/reviewboard'
     }
 
 Enable LDAP authentication for the site

@@ -37,14 +37,6 @@ define reviewboard::provider::web::simple (
     notify => Service['httpd'],
   }
 
-  # Directories written by the web server
-  file {["${site}/data","${site}/htdocs/media/ext"]:
-    ensure  => directory,
-    owner   => 'apache',
-    recurse => true,
-    notify  => Service['httpd'],
-  }
-
   # Propogate update events to the service
   exec {"Update ${name}":
     command     => '/bin/true',

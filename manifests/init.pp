@@ -16,9 +16,20 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
+# Install and generic configs for Reviewboard
+
+# webprovider: Package to use to configure the web server, or 'none' for no
+#              config
+# webuser:     User that should own the web folders
+# dbprovider:  Package to use to configure the database, or 'none' for no
+#              config
+# dbtype:      Type of database to use
+
 class reviewboard (
   $webprovider = 'puppetlabs/apache',
+  $webuser     = undef,
   $dbprovider  = 'puppetlabs/postgresql',
+  $dbtype      = 'postgresql'
 ) {
 
   include reviewboard::package

@@ -20,6 +20,7 @@
 define reviewboard::provider::web (
   $vhost,
   $location,
+  $webuser,
 ) {
 
   $site = $name
@@ -29,14 +30,39 @@ define reviewboard::provider::web (
       vhost       => $vhost,
       location    => $location,
     }
+
+    $realwebuser = 'apache'
+    $webservice  = Service['httpd']
+
   } elsif $reviewboard::webprovider == 'puppetlabs/apache' {
+    include apache
     reviewboard::provider::web::puppetlabsapache {$site:
       vhost       => $vhost,
       location    => $location,
     }
+
+    $realwebuser = $apache::user
+    $webservice  = Class['apache::service']
+
   } elsif $reviewboard::webprovider == 'none' {
     # No-op
+
+    # If you're using a custom web provider you'll need to manually set up
+    # service notifications, e.g.
+    # Reviewboard::Provider::Web<||> ~> Service['apache']
+    $realwebuser = $webuser
+    $webservice  = undef
+
   } else {
     err("Web provider '${reviewboard::webprovider}' not defined")
   }
+
+  # Set web folder ownership
+  file {["${site}/data","${site}/htdocs/media/ext"]:
+    ensure  => directory,
+    owner   => $realwebuser,
+    notify  => $webservice,
+    recurse => true,
+  }
+
 }

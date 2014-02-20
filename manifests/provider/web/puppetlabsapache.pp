@@ -73,14 +73,6 @@ define reviewboard::provider::web::puppetlabsapache (
     aliases             => $aliases,
   }
 
-  # Directories written by the web server
-  file {["${site}/data","${site}/htdocs/media/ext"]:
-    ensure  => directory,
-    owner   => 'apache',
-    recurse => true,
-    notify  => Class['apache::service'],
-  }
-
   # Propogate update events to the service
   exec {"Update ${name}":
     command     => '/bin/true',

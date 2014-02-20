@@ -35,8 +35,8 @@ node default {
       Class['postgresql::server','postgresql::lib::python'],
       Package['memcached','python-memcached','python-ldap']
     ],
-    dbpass      => 'testing',
-    adminpass   => 'testing',
+    dbpass    => 'testing',
+    adminpass => 'testing',
   }
   #  reviewboard::site::ldap {'/var/www/reviewboard':
   #    uri    => 'test.example.com',

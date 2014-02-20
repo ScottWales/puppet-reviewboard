@@ -22,7 +22,7 @@
 rpm -ivh https://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-7.noarch.rpm
 yum install --assumeyes puppet git
 
-gem install librarian-puppet
+gem install --no-rdoc --no-ri librarian-puppet
 
 # We run librarian-puppet in the /etc/puppet directory as you can get errors
 # running in a directory shared by vagrant 

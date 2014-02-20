@@ -32,7 +32,7 @@ define reviewboard::site (
   $adminemail = 'apache',
   $cache      = 'memcached',
   $cacheinfo  = 'localhost:11211',
-  $wwwuser    = 'apache',
+  $webuser    = $reviewboard::webuser,
 ) {
   include reviewboard
 
@@ -71,6 +71,7 @@ define reviewboard::site (
   reviewboard::provider::web {$site:
     vhost    => $vhost,
     location => $location,
+    webuser  => $webuser,
     require  => Reviewboard::Site::Install[$site],
   }
 
