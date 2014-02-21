@@ -55,6 +55,18 @@ The default settings are
         dbprovider  => 'puppetlabs/postgresql'
     }
 
+To use a custom web provider set the 'webuser' parameter & subscribe the web
+service to `reviewboard::provider::web<||>`:
+
+    class reviewboard {
+        webprovider => 'none',
+        webuser     => 'apache',
+    }
+    Reviewboard::Provider::Web<||> ~> Service['apache']
+
+You will then need to manually configure your web server, Reviewboard generates
+an example Apache config file in ${site}/conf/apache-wsgi.conf.
+
 Testing
 -------
 
