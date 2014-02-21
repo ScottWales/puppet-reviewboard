@@ -17,7 +17,7 @@
 
 # Install rbt
 class reviewboard::rbtool {
-  package {'RBtools':
+  package {'RBTools':
     ensure   => present,
     provider => pip,
   }
