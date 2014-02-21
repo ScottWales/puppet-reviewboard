@@ -5,6 +5,9 @@ Manage an install of [Reviewboard](http://www.reviewboard.org)
 
 To install include the package 'reviewboard' in your manifest
 
+Optionally you can install the RBtool package for submitting reviews by
+including 'reviewboard::rbtool'
+
 Pre-Requisites
 --------------
 
