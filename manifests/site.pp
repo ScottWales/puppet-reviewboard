@@ -29,7 +29,7 @@ define reviewboard::site (
   $dbpass     = undef,
   $admin      = 'admin',
   $adminpass  = undef,
-  $adminemail = 'apache',
+  $adminemail = "${reviewboard::webuser}@${::fqdn}",
   $cache      = 'memcached',
   $cacheinfo  = 'localhost:11211',
   $webuser    = $reviewboard::webuser,
