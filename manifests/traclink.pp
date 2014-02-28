@@ -1,8 +1,7 @@
-## \file    manifests/package.pp
+## \file    manifests/traclink.pp
 #  \author  Scott Wales <scott.wales@unimelb.edu.au>
-#  \brief
 #
-#  Copyright 2014 Scott Wales
+#  Copyright 2014 ARC Centre of Excellence for Climate Systems Science
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -16,14 +15,16 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-class reviewboard::package {
+# Extension to automatically link reviews to Trac
+class reviewboard::traclink {
+  include reviewboard::package
 
-  # Install Reviewboard 2 as that supports custom extensions
-  $version = '2.0beta3'
-
-  exec {'easy_install reviewboard':
-    command => "easy_install http://downloads.reviewboard.org/releases/ReviewBoard/2.0/ReviewBoard-${version}-py2.6.egg",
-    unless  => "pip freeze | grep 'ReviewBoard==${version}'",
+  package {'trac_link':
+    name     => 'git+https://github.com/ScottWales/reviewboard-trac-link',
+    provider => 'pip',
   }
+
+  # Reload the web server after installing an extension
+  Package['trac_link'] ~> Reviewboard::Provider::Web<||>
 
 }
