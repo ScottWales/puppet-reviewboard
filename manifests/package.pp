@@ -24,6 +24,8 @@ class reviewboard::package {
   exec {'easy_install reviewboard':
     command => "easy_install http://downloads.reviewboard.org/releases/ReviewBoard/2.0/ReviewBoard-${version}-py2.6.egg",
     unless  => "pip freeze | grep 'ReviewBoard==${version}'",
+    path    => ['/bin','/usr/bin' ],
+    require => Package['python-pip'],
   }
 
 }

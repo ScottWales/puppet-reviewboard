@@ -22,6 +22,7 @@ class reviewboard::traclink {
   package {'trac_link':
     name     => 'git+https://github.com/ScottWales/reviewboard-trac-link',
     provider => 'pip',
+    require  => Class[reviewboard::package],
   }
 
   # Reload the web server after installing an extension

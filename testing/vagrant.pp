@@ -19,16 +19,24 @@
 node default {
   include postgresql::server
   include postgresql::lib::python
+  include epel
+
+  package{['python-pip','python-devel']:
+    require => Class['epel'],
+  }
+
+  Package['python-pip','python-devel'] -> Package<|provider==pip|>
 
   class {'apache':
     default_vhost => false,
   }
 
-  package {['memcached','python-memcached','python-ldap']:}
+  package {['memcached','python-memcached','python-ldap','patch']:}
 
   class {'reviewboard':
     webprovider => 'puppetlabs/apache',
   }
+  include reviewboard::traclink
 
   reviewboard::site {'/var/www/reviewboard':
     require   => [
