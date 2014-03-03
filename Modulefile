@@ -3,7 +3,7 @@ version         '1.0.0'
 summary         'Install and control reviewboard'
 author          'Scott Wales'
 project_page    'https://github.com/ScottWales/puppet-reviewboard'
-licence         'Apache v2.0'
+license         'Apache v2.0'
 
 description     <<END
 Installs reviewboard (reviewboard.org), a web tool for doing code reviews. It
