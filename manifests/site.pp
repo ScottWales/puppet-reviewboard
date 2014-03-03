@@ -65,6 +65,7 @@ define reviewboard::site (
     adminemail => $adminemail,
     cache      => $cache,
     cacheinfo  => $cacheinfo,
+    require    => Reviewboard::Provider::Db[$site],
   }
 
   # Set up the web server

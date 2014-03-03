@@ -31,7 +31,6 @@ define reviewboard::provider::db::puppetlabspostgresql (
   postgresql::server::db {$dbname:
     user     => $dbuser,
     password => postgresql_password($dbuser,$dbpass),
-    before   => Exec["rb-site install ${name}"],
   }
 
 }
