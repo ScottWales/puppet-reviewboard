@@ -19,13 +19,13 @@
 class reviewboard::traclink {
   include reviewboard::package
 
-  package {'trac_link':
+  package {'trac-link':
     name     => 'git+https://github.com/ScottWales/reviewboard-trac-link',
     provider => 'pip',
     require  => Class[reviewboard::package],
   }
 
   # Reload the web server after installing an extension
-  Package['trac_link'] ~> Reviewboard::Provider::Web<||>
+  Package['trac-link'] ~> Reviewboard::Provider::Web<||>
 
 }
