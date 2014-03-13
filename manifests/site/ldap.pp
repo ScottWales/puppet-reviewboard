@@ -23,9 +23,9 @@
 
 
 define reviewboard::site::ldap (
-  $site = $name,
   $uri,
   $basedn,
+  $site = $name,
   $usermask = '(uid=%s)',
   $emaildomain = undef,
 ) {
