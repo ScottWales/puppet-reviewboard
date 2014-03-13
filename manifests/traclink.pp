@@ -20,7 +20,7 @@ class reviewboard::traclink {
   include reviewboard::package
 
   package {'trac-link':
-    name     => 'git+https://github.com/ScottWales/reviewboard-trac-link',
+    source   => 'git+https://github.com/ScottWales/reviewboard-trac-link',
     provider => 'pip',
     require  => Class[reviewboard::package],
   }
