@@ -18,7 +18,6 @@
 
 node default {
   include postgresql::server
-  include postgresql::lib::python
   include epel
 
   package{['python-pip','python-devel']:
