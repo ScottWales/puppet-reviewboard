@@ -1,5 +1,9 @@
+.bundle
 .vagrant
 .librarian
 .tmp
 Puppetfile.lock
+Gemfile.lock
 modules
+pkg
+vendor
