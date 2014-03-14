@@ -17,8 +17,7 @@ Puppet module pre-requisites are managed using
 Additionally the following optional prerequisites may be installed:
 
  * memcached & python-memcached for website caching
- * python-ldap for ldap authentication
- * python bindings for your database
+ * python bindings for your database (if not installed by the dbprovider)
 
 Usage
 -----
@@ -69,6 +68,7 @@ Other Features
 
  * **LDAP Authentication**: Set up LDAP authentication via Puppet. To install:
 
+        package {python-ldap: }
         reviewboard::site::ldap {'/var/www/reviewboard':
             uri    => 'ldap://example.com',
             basedn => 'dn=example,dn=com',
