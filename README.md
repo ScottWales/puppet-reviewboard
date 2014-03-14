@@ -74,7 +74,7 @@ Integration tests make use of 'serverspec' to check the module is applied proper
 
 To setup tests
 
-    $ gem install bundle
+    $ gem install bundler
     $ bundle install --path vendor/bundle
 
 then to run the tests
