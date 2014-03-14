@@ -90,7 +90,7 @@ Other Features
 Testing
 -------
 
-Integration tests make use of 'serverspec' to check the module is applied properly on a Vagrant VM.
+Integration tests make use of [serverspec](http://serverspec.org) to check the module is applied properly on a Vagrant VM.
 
 To setup tests
 
