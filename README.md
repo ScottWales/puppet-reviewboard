@@ -66,7 +66,7 @@ Other Features
 
         include reviewboard::rbtool
 
- * **Trac integration**: The 'traclink' Reviewboard plugin posts a notice on a Trac ticket whenever the 'Bug' field is set in a review. To install:
+ * **Trac integration**: The [traclink](https://github.com/ScottWales/reviewboard-trac-link) Reviewboard plugin posts a notice on a Trac ticket whenever the 'Bug' field is set in a review. To install:
 
         package {trac: } # Make sure Trac is installed via Puppet
         include reviewboard::traclink
