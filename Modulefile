@@ -1,5 +1,5 @@
 name            'saw-reviewboard'
-version         '1.0.0'
+version         '1.0.1'
 summary         'Install and control reviewboard'
 author          'Scott Wales'
 project_page    'https://github.com/ScottWales/puppet-reviewboard'
