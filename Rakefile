@@ -9,4 +9,4 @@ end
 PuppetLint.configuration.send('disable_80chars')
 PuppetLint.configuration.ignore_paths = ['pkg/**/*.pp','vendor/**/*.pp']
 
-task :default => :spec
+task :default => [:lint,:spec]
