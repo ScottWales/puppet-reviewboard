@@ -83,7 +83,7 @@ Other Features
 
         [ticket-custom]
         reviews = text
-        format = wiki
+        reviews.format = wiki
         [interwiki]
         review = //reviewboard/r
 
