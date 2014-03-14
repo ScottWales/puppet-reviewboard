@@ -25,6 +25,7 @@ define reviewboard::provider::web::puppetlabsapache (
   $site = $name
 
   include apache::mod::wsgi
+  include apache::mod::mime
 
   $error_documents = [{error_code => '500', document => '/errordocs/500.html'}]
   $script_aliases  = {"${location}" => "${site}/htdocs/reviewboard.wsgi/reviewboard"}

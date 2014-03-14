@@ -19,27 +19,23 @@
 node default {
   include postgresql::server
   include epel
+  class {'apache':
+    default_vhost => false,
+    default_mods  => false,
+  }
 
   package{['python-pip','python-devel']:
     require => Class['epel'],
   }
-
   Package['python-pip','python-devel'] -> Package<|provider==pip|>
-
-  class {'apache':
-    default_vhost => false,
-  }
-
   package {['memcached','python-memcached','python-ldap','patch']:}
 
+  # Install Reviewboard
   class {'reviewboard':
     webprovider => 'puppetlabs/apache',
   }
-  include reviewboard::traclink
-  package {'trac':
-    provider => pip,
-  }
 
+  # Setup site
   reviewboard::site {'/var/www/reviewboard':
     require   => [
       Class['postgresql::server','postgresql::lib::python'],
@@ -49,10 +45,21 @@ node default {
     dbpass    => 'testing',
     adminpass => 'testing',
   }
-  #  reviewboard::site::ldap {'/var/www/reviewboard':
-  #    uri    => 'test.example.com',
-  #    basedn => 'dn=test,dn=example,dn=com',
-  #  }
+
+  # RBTools
+  include reviewboard::rbtool
+
+  # # Setup LDAP auth
+  # reviewboard::site::ldap {'/var/www/reviewboard':
+  #   uri    => 'test.example.com',
+  #   basedn => 'dn=test,dn=example,dn=com',
+  # }
+
+  # Trac link plugin
+  package {'trac':
+    provider => pip,
+  }
+  include reviewboard::traclink
 
   # Disable the firewall
   service {'iptables':
