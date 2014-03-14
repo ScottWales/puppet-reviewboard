@@ -37,7 +37,7 @@ You can change how the sites are configured with the 'provider' arguments to the
   * *none*: No web provisioning is done
 
 **dbprovider**:
-  * *puppetlabs/postgresql*: Use the puppetlabs/postgresql module to create database tables
+  * *puppetlabs/postgresql*: Use the puppetlabs/postgresql module to create database tables & install bindings
   * *none*: No DB provisioning is done (note a database is required for the install to work)
 
 The default settings are
