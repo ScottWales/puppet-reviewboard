@@ -70,8 +70,16 @@ an example Apache config file in ${site}/conf/apache-wsgi.conf.
 Testing
 -------
 
-A Vagrantfile is provided to test the module, to test provisioning run
+Integration tests make use of 'serverspec' to check the module is applied properly on a Vagrant VM.
 
-    $ vagrant up
+To setup tests
 
-The Reviewboard site will then be available at http://localhost:8090/reviewboard
+    $ gem install bundle
+    $ bundle install --path vendor/bundle
+
+then to run the tests
+
+    $ bundle exec rake
+
+Use `vagrant destroy` to stop the test VM.
+
