@@ -85,7 +85,7 @@ Other Features
         reviews = text
         reviews.format = wiki
         [interwiki]
-        review = //reviewboard/r
+        review = //reviewboard/r/
 
 Testing
 -------
