@@ -70,18 +70,18 @@ an example Apache config file in ${site}/conf/apache-wsgi.conf.
 Other Features
 --------------
 
- * Trac integration: The 'traclink' Reviewboard plugin posts a notice on a Trac ticket whenever the 'Bug' field is set in a review. To install:
+ * **Trac integration**: The 'traclink' Reviewboard plugin posts a notice on a Trac ticket whenever the 'Bug' field is set in a review. To install:
 
-    package {trac: } # Make sure Trac is installed via Puppet
-    include reviewboard::traclink
+        package {trac: } # Make sure Trac is installed via Puppet
+        include reviewboard::traclink
 
-There is also some setup required in your site's `trac.ini`:
+    There is also some setup required in your site's `trac.ini`:
 
-    [ticket-custom]
-    reviews = text
-    format = wiki
-    [interwiki]
-    review = //reviewboard/r
+        [ticket-custom]
+        reviews = text
+        format = wiki
+        [interwiki]
+        review = //reviewboard/r
 
 Testing
 -------
