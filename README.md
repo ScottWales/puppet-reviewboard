@@ -66,14 +66,6 @@ Other Features
 
         include reviewboard::rbtool
 
- * **LDAP Authentication**: Set up LDAP authentication via Puppet. To install:
-
-        package {python-ldap: }
-        reviewboard::site::ldap {'/var/www/reviewboard':
-            uri    => 'ldap://example.com',
-            basedn => 'dn=example,dn=com',
-        }
-
  * **Trac integration**: The 'traclink' Reviewboard plugin posts a notice on a Trac ticket whenever the 'Bug' field is set in a review. To install:
 
         package {trac: } # Make sure Trac is installed via Puppet

@@ -21,7 +21,6 @@
 
 # site -> Reviewboard site
 
-
 define reviewboard::site::ldap (
   $uri,
   $basedn,
@@ -29,6 +28,7 @@ define reviewboard::site::ldap (
   $usermask = '(uid=%s)',
   $emaildomain = undef,
 ) {
+  warning('LDAP configuration not presently working in tests')
 
   Reviewboard::Site::Config {
     site    => $site,
