@@ -23,18 +23,11 @@ Additionally the following optional prerequisites may be installed:
 Usage
 -----
 
-Create a reviewboard site based at '/var/www/reviewboard':
+Create a reviewboard site based at '/var/www/reviewboard', available at ${::fqdn}/reviewboard:
 
     reviewboard::site {'/var/www/reviewboard':
         vhost    => "${::fqdn}",
         location => '/reviewboard'
-    }
-
-Enable LDAP authentication for the site
-
-    reviewboard::site::ldap {'/var/www/reviewboard':
-        uri    => 'ldap://example.com',
-        basedn => 'dn=example,dn=com',
     }
 
 You can change how the sites are configured with the 'provider' arguments to the reviewboard class. 
@@ -69,6 +62,17 @@ an example Apache config file in ${site}/conf/apache-wsgi.conf.
 
 Other Features
 --------------
+
+ * **RBTool**: Reviewboard command-line interface. To install:
+
+        include reviewboard::rbtool
+
+ * **LDAP Authentication**: Set up LDAP authentication via Puppet. To install:
+
+        reviewboard::site::ldap {'/var/www/reviewboard':
+            uri    => 'ldap://example.com',
+            basedn => 'dn=example,dn=com',
+        }
 
  * **Trac integration**: The 'traclink' Reviewboard plugin posts a notice on a Trac ticket whenever the 'Bug' field is set in a review. To install:
 
