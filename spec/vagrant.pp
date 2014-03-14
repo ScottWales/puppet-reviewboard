@@ -36,12 +36,16 @@ node default {
     webprovider => 'puppetlabs/apache',
   }
   include reviewboard::traclink
+  package {'trac':
+    provider => pip,
+  }
 
   reviewboard::site {'/var/www/reviewboard':
     require   => [
       Class['postgresql::server','postgresql::lib::python'],
       Package['memcached','python-memcached','python-ldap']
     ],
+    vhost     => 'localhost',
     dbpass    => 'testing',
     adminpass => 'testing',
   }

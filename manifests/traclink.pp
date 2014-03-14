@@ -16,16 +16,18 @@
 #  limitations under the License.
 
 # Extension to automatically link reviews to Trac
+# Requires trac to be installed first
+
 class reviewboard::traclink {
   include reviewboard::package
 
-  package {'trac-link':
+  package {'traclink':
     source   => 'git+https://github.com/ScottWales/reviewboard-trac-link',
     provider => 'pip',
-    require  => Class[reviewboard::package],
+    require  => [Class[reviewboard::package],Package[trac]]
   }
 
   # Reload the web server after installing an extension
-  Package['trac-link'] ~> Reviewboard::Provider::Web<||>
+  Package['traclink'] ~> Reviewboard::Provider::Web<||>
 
 }

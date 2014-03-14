@@ -20,8 +20,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
   config.vm.network :forwarded_port, guest: 80, host: 8090
+  config.vm.hostname = 'localhost'
 
-  config.vm.provision :shell, path: "testing/init.sh"
+  config.vm.provision :shell, path: "spec/puppet-init.sh"
 
   config.vm.synced_folder "./", "/tmp/vagrant-puppet/modules/reviewboard"
 
@@ -44,7 +45,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # # }
   #
   config.vm.provision :puppet do |puppet|
-    puppet.manifests_path = ["vm", "/vagrant/testing"]
+    puppet.manifests_path = ["vm", "/vagrant/spec"]
     puppet.manifest_file  = "vagrant.pp"
     puppet.options = "--modulepath '/tmp/vagrant-puppet/modules:/etc/puppet/modules'"
   end
