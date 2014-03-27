@@ -31,3 +31,8 @@ gem install --no-rdoc --no-ri librarian-puppet
 ln -sf /vagrant/Modulefile /etc/puppet
 ln -sf /vagrant/Puppetfile /etc/puppet
 cd /etc/puppet && librarian-puppet install --verbose
+
+# Install optional dependencies
+puppet module install puppetlabs/apache
+puppet module install puppetlabs/postgresql
+puppet module install stahnma/epel

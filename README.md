@@ -11,8 +11,16 @@ including 'reviewboard::rbtool'
 Pre-Requisites
 --------------
 
-Puppet module pre-requisites are managed using
-[librarian-puppet](https://github.com/rodjek/librarian-puppet)
+The Modulefile only lists the mandatory 'stdlib' dependency. It is possible to
+configure what modules are used to provide the web server and database, it is
+neccessary to separately install these dependencies, e.g. for the default
+setup:
+
+    puppet module install puppetlabs/apache
+    puppet module install puppetlabs/postgresql
+
+The modules available are listed below in the 'Usage' section, pull requests to
+support other providers are welcome.
 
 Additionally the following optional prerequisites may be installed:
 

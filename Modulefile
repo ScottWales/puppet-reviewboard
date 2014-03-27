@@ -11,6 +11,3 @@ may optionally be integrated with Trac to connect code reviews with tickets.
 END
 
 dependency      'puppetlabs/stdlib'
-dependency      'puppetlabs/postgresql'
-dependency      'puppetlabs/apache'
-dependency      'stahnma/epel'
