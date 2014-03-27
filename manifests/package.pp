@@ -16,13 +16,19 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-class reviewboard::package {
-
-  # Install Reviewboard 2 as that supports custom extensions
-  $version = '2.0beta3'
+class reviewboard::package (
+  $version = '1.7.22', # the current stable release
+) {
+  
+  $base_url = "http://downloads.reviewboard.org/releases/ReviewBoard"
+  case $version {
+    /^2\.0\./: { $egg_url = "${base_url}/2.0/ReviewBoard-${version}-py2.6.egg" }
+    /^1\.7\./: { $egg_url = "${base_url}/1.7/ReviewBoard-${version}-py2.6.egg" }
+    default: { fail("Review Board ${version} has not been tested with reviewboard::package.") }
+  }
 
   exec {'easy_install reviewboard':
-    command => "easy_install http://downloads.reviewboard.org/releases/ReviewBoard/2.0/ReviewBoard-${version}-py2.6.egg",
+    command => "easy_install '${egg_url}'",
     unless  => "pip freeze | grep 'ReviewBoard==${version}'",
     path    => ['/bin','/usr/bin' ],
     require => Package['python-pip'],
