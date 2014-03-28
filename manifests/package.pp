@@ -21,6 +21,10 @@ class reviewboard::package {
   # Install Reviewboard 2 as that supports custom extensions
   $version = '2.0beta3'
 
+  package { 'python-pip':
+    ensure => installed,
+  }
+
   exec {'easy_install reviewboard':
     command => "easy_install http://downloads.reviewboard.org/releases/ReviewBoard/2.0/ReviewBoard-${version}-py2.6.egg",
     unless  => "pip freeze | grep 'ReviewBoard==${version}'",
