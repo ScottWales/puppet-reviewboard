@@ -28,13 +28,19 @@ define reviewboard::provider::web::puppetlabsapache (
   include apache::mod::mime
 
   $error_documents = [{error_code => '500', document => '/errordocs/500.html'}]
-  $script_aliases  = {"${location}" => "${site}/htdocs/reviewboard.wsgi/reviewboard"}
+  if ($location == '/') {
+    $locationfragment = ''
+  } else {
+    $locationfragment = "${location}"
+  }
+
+  $script_aliases  = {"${location}" => "${site}/htdocs/reviewboard.wsgi${locationfragment}"}
 
   $directories = [
     {path   => "${site}/htdocs",
     options => ['-Indexes','+FollowSymLinks']
     },
-    {path           => "${location}/media/uploaded",
+    {path           => "${locationfragment}/media/uploaded",
     provider        => 'location',
     custom_fragment => '
       SetHandler None
@@ -50,16 +56,16 @@ define reviewboard::provider::web::puppetlabsapache (
   ]
 
   $aliases = [
-    {alias => "${location}/media",
+    {alias => "${locationfragment}/media",
     path => "${site}/htdocs/media"
     },
-    {alias => "${location}/static",
+    {alias => "${locationfragment}/static",
     path => "${site}/htdocs/static"
     },
-    {alias => "${location}/errordocs",
+    {alias => "${locationfragment}/errordocs",
     path => "${site}/htdocs/errordocs"
     },
-    {alias => "${location}/favicon.ico",
+    {alias => "${locationfragment}/favicon.ico",
     path => "${site}/htdocs/static/rb/images/favicon.png"
     },
   ]
