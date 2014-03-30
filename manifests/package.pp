@@ -27,6 +27,10 @@ class reviewboard::package (
     default: { fail("Review Board ${version} has not been tested with reviewboard::package.") }
   }
 
+  package { 'python-pip':
+    ensure => installed,
+  }
+
   exec {'easy_install reviewboard':
     command => "easy_install '${egg_url}'",
     unless  => "pip freeze | grep 'ReviewBoard==${version}'",
