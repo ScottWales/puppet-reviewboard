@@ -31,7 +31,7 @@ define reviewboard::provider::web::puppetlabsapache (
   if ($location == '/') {
     $locationfragment = ''
   } else {
-    $locationfragment = "${location}"
+    $locationfragment = $location
   }
 
   $script_aliases  = {"${location}" => "${site}/htdocs/reviewboard.wsgi${locationfragment}"}
