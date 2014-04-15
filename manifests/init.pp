@@ -26,7 +26,7 @@
 # dbtype:      Type of database to use
 
 class reviewboard (
-  $version     = '1.7.22', # Current stable release
+  $version     = '1.7.24', # Current stable release
   $webprovider = 'puppetlabs/apache',
   $webuser     = undef,
   $dbprovider  = 'puppetlabs/postgresql',

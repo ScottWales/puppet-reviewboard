@@ -57,7 +57,7 @@ You can change how the sites are configured with the 'provider' arguments to the
 The default settings are
     
     class reviewboard {
-        version     => '1.7.22',
+        version     => '1.7.24',
         webprovider => 'puppetlabs/apache',
         dbprovider  => 'puppetlabs/postgresql'
     }
