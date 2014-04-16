@@ -19,12 +19,14 @@
 class reviewboard::package (
   $version = '1.7.22', # the current stable release
 ) {
-  
-  $base_url = "http://downloads.reviewboard.org/releases/ReviewBoard"
+
+  $base_url = 'http://downloads.reviewboard.org/releases/ReviewBoard'
   case $version {
     /^2\.0\./: { $egg_url = "${base_url}/2.0/ReviewBoard-${version}-py2.6.egg" }
     /^1\.7\./: { $egg_url = "${base_url}/1.7/ReviewBoard-${version}-py2.6.egg" }
-    default: { fail("Review Board ${version} has not been tested with reviewboard::package.") }
+    default: {
+      fail("Review Board ${version} has not been tested with reviewboard::package.")
+    }
   }
 
   exec {'easy_install reviewboard':
